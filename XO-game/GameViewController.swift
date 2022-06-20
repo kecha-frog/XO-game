@@ -15,10 +15,19 @@ class GameViewController: UIViewController {
     @IBOutlet var secondPlayerTurnLabel: UILabel!
     @IBOutlet var winnerLabel: UILabel!
     @IBOutlet var restartButton: UIButton!
+
+    private lazy var segmentedControl: UISegmentedControl = {
+        let control = UISegmentedControl()
+        control.translatesAutoresizingMaskIntoConstraints = false
+        control.addTarget(self, action: #selector(handleSegmentedControlChange(_: )), for: .valueChanged)
+        return control
+    }()
     
     var counter = 0
     private let gameBoard = Gameboard()
     private lazy var referee = Referee(gameboard: gameBoard)
+
+    private var isComputerPlayer = true
     
     private var currentState: PlayGameState! {
         didSet {
@@ -41,9 +50,11 @@ class GameViewController: UIViewController {
                 self.nextPlayerTurn()
             }
         }
+
+        setupSegmentControl()
     }
     
-    @IBAction func restartButtonTapped(_ sender: UIButton) {
+    @IBAction func restartButtonTapped(_ sender: UIButton?) {
         Logger.shared.log(action: .restartGame)
         
         gameboardView.clear()
@@ -57,11 +68,18 @@ class GameViewController: UIViewController {
         let firstPlayer: Player = .first
         
         let markView = getMarkView(player: firstPlayer)
-        
-        currentState = PlayerGameState(player: firstPlayer,
-                                       gameViewController: self,
-                                       gameBoard: gameBoard,
-                                       gameBoardView: gameboardView, markView: markView)
+        if isComputerPlayer {
+            currentState = ComputerGameState(player: firstPlayer,
+                                             gameViewController: self,
+                                             gameBoard: gameBoard,
+                                             gameBoardView: gameboardView, markView: markView)
+        } else {
+            currentState = PlayerGameState(player: firstPlayer,
+                                           gameViewController: self,
+                                           gameBoard: gameBoard,
+                                           gameBoardView: gameboardView, markView: markView)
+        }
+
     }
     
     private func nextPlayerTurn() {
@@ -75,14 +93,22 @@ class GameViewController: UIViewController {
             currentState = GameEndState(winnerPlayer: nil, gameViewController: self)
             return
         }
-        
-        if let playerState = currentState as? PlayerGameState {
+
+        if let playerState = currentState as? ComputerGameState{
             let next = playerState.player.next
             let markView = getMarkView(player: next)
-            currentState = PlayerGameState(player: next, gameViewController: self,
-                                           gameBoard: gameBoard, gameBoardView: gameboardView, markView: markView)
+            currentState = ComputerGameState(player: next,
+                                             gameViewController: self,
+                                             gameBoard: gameBoard,
+                                             gameBoardView: gameboardView, markView: markView)
+        } else if let playerState = currentState as? PlayerGameState{
+            let next = playerState.player.next
+            let markView = getMarkView(player: next)
+            currentState = PlayerGameState(player: next,
+                                           gameViewController: self,
+                                           gameBoard: gameBoard,
+                                           gameBoardView: gameboardView, markView: markView)
         }
-        
     }
     
     private func getMarkView(player: Player) -> MarkView {
@@ -92,6 +118,34 @@ class GameViewController: UIViewController {
         case .second:
             return OView()
         }
+    }
+
+    private func setupSegmentControl() {
+        view.addSubview(segmentedControl)
+
+        NSLayoutConstraint.activate([
+            segmentedControl.bottomAnchor.constraint(equalTo: firstPlayerTurnLabel.topAnchor, constant: -10),
+            segmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            segmentedControl.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
+        ])
+
+        segmentedControl.insertSegment(withTitle: "Player vs Player", at: 0, animated: true)
+        segmentedControl.insertSegment(withTitle: "Player vs Computer", at: 1, animated: true)
+        segmentedControl.selectedSegmentIndex = 1
+    }
+
+    // MARK: - Actions
+
+    @objc private func handleSegmentedControlChange(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            self.isComputerPlayer = false
+            self.secondPlayerTurnLabel.text = "2nd player"
+        } else if sender.selectedSegmentIndex == 1 {
+            self.isComputerPlayer = true
+            self.secondPlayerTurnLabel.text = "Computer"
+        }
+
+        restartButtonTapped(nil)
     }
 }
 
