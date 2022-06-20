@@ -11,8 +11,7 @@ import Foundation
 class ComputerGameState: PlayerGameState {
     override init(
         player: Player, gameViewController: GameViewController?,
-        gameBoard: Gameboard?,
-        gameBoardView: GameboardView?, markView: MarkView) {
+        gameBoard: Gameboard?, gameBoardView: GameboardView?, markView: MarkView) {
         super.init(
             player: player,
             gameViewController: gameViewController,
@@ -44,11 +43,14 @@ class ComputerGameState: PlayerGameState {
     }
 
     private func computerMove() {
-        guard let gameBoardView = gameBoardView else { return }
+        guard let gameBoardView = gameBoardView,
+              let gameViewController = gameViewController
+        else { return }
         
         let position = GameboardPosition(column: Int.random(in: 0...2), row: Int.random(in: 0...2))
 
         if gameBoardView.canPlaceMarkView(at: position) {
+            gameViewController.moveAllow(true)
             self.gameBoardView?.onSelectPosition?(position)
         }else {
             computerMove()

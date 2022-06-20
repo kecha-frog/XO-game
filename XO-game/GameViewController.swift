@@ -28,6 +28,7 @@ class GameViewController: UIViewController {
     private lazy var referee = Referee(gameboard: gameBoard)
 
     private var isComputerPlayer = true
+    private var isMoveAllowed = true
     
     private var currentState: PlayGameState! {
         didSet {
@@ -43,11 +44,13 @@ class GameViewController: UIViewController {
         gameboardView.onSelectPosition = { [weak self] position in
             guard let self = self else { return }
 
-            self.currentState.addSign(at: position)
-            self.counter += 1
+            if self.isMoveAllowed{
+                self.currentState.addSign(at: position)
+                self.counter += 1
 
-            if self.currentState.isMoveCompleted {
-                self.nextPlayerTurn()
+                if self.currentState.isMoveCompleted {
+                    self.nextPlayerTurn()
+                }
             }
         }
 
@@ -62,6 +65,10 @@ class GameViewController: UIViewController {
         counter = 0
         
         firstPlayerTurn()
+    }
+
+    func moveAllow(_ allow: Bool) {
+        isMoveAllowed = allow
     }
     
     private func firstPlayerTurn() {
@@ -95,6 +102,13 @@ class GameViewController: UIViewController {
         }
 
         if let playerState = currentState as? ComputerGameState{
+            switch playerState.player {
+            case .first:
+                moveAllow(false)
+            case .second:
+                moveAllow(true)
+            }
+
             let next = playerState.player.next
             let markView = getMarkView(player: next)
             currentState = ComputerGameState(player: next,
@@ -106,8 +120,7 @@ class GameViewController: UIViewController {
             let markView = getMarkView(player: next)
             currentState = PlayerGameState(player: next,
                                            gameViewController: self,
-                                           gameBoard: gameBoard,
-                                           gameBoardView: gameboardView, markView: markView)
+                                           gameBoard: gameBoard, gameBoardView: gameboardView, markView: markView)
         }
     }
     
