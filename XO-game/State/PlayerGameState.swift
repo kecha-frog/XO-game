@@ -32,14 +32,6 @@ class PlayerGameState: PlayGameState {
               gameBoardView.canPlaceMarkView(at: position)
         else { return }
         
-//        let markView: MarkView
-//        switch player {
-//        case .first:
-//            markView = XView()
-//        case .second:
-//            markView = OView()
-//        }
-        
         gameBoard?.setPlayer(player, at: position)
         Logger.shared.log(action: .playerSetSign(player: player, position: position))
         gameBoardView.placeMarkView(markView.copy(), at: position)
