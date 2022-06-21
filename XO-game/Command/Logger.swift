@@ -10,8 +10,7 @@ import Foundation
 
 class Logger {
     public static var shared = Logger()
-    
-    
+
     private init() {}
     
     public func log(action: LogAction) {
