@@ -26,7 +26,6 @@ class PlayerGameState: PlayGameState {
         self.markView = markView
     }
     
-    
     func addSign(at position: GameboardPosition) {
         guard let gameBoardView = gameBoardView,
               gameBoardView.canPlaceMarkView(at: position)
@@ -49,7 +48,6 @@ class PlayerGameState: PlayGameState {
         }
         
         gameViewController?.winnerLabel.isHidden = true
+        gameViewController?.moveCounterLabel.isHidden = true
     }
-    
-    
 }

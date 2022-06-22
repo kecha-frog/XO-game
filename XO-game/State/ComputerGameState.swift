@@ -11,7 +11,8 @@ import Foundation
 class ComputerGameState: PlayerGameState {
     override init(
         player: Player, gameViewController: GameViewController?,
-        gameBoard: Gameboard?, gameBoardView: GameboardView?, markView: MarkView) {
+        gameBoard: Gameboard?, gameBoardView: GameboardView?, markView: MarkView
+    ) {
         super.init(
             player: player,
             gameViewController: gameViewController,
