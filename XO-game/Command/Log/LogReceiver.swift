@@ -9,6 +9,8 @@
 import Foundation
 
 class LogReceiver {
+    // MARK: - Public Methods
+    
     func setMessage(message: String) {
         print(message)
     }

@@ -9,16 +9,25 @@
 import Foundation
 
 class GameEndState: PlayGameState {
-    var isMoveCompleted: Bool = false
+    // MARK: - Public Properties
     
-    public let winnerPlayer: Player?
+    var isMoveCompleted: Bool = false
+
     weak var gameViewController: GameViewController?
+
+    // MARK: - Private Properties
+    
+    private let winnerPlayer: Player?
+
+    // MARK: - Initialization
     
     init(winnerPlayer: Player?, gameViewController: GameViewController) {
         self.winnerPlayer = winnerPlayer
         self.gameViewController = gameViewController
     }
-    
+
+    // MARK: - Public Methods
+
     func addSign(at position: GameboardPosition) {}
     
     func begin() {
@@ -36,7 +45,8 @@ class GameEndState: PlayGameState {
         gameViewController?.secondPlayerTurnLabel.isHidden = true
     }
     
-    
+    // MARK: - Private Methods
+
     private func setPlayerName(player: Player) -> String {
         switch player {
         case .first:

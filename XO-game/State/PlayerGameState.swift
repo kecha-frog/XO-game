@@ -9,15 +9,22 @@
 import Foundation
 
 class PlayerGameState: PlayGameState {
+    // MARK: - Public Properties
+
     var isMoveCompleted: Bool = false
     
     public let player: Player
-    
+
+    public let markView: MarkView
+
+    // MARK: - Private Properties
+
     private(set) weak var gameViewController: GameViewController?
     private(set) weak var gameBoard: Gameboard?
     private(set) weak var gameBoardView: GameboardView?
-    public let markView: MarkView
-    
+
+    // MARK: - Initialization
+
     init(player: Player, gameViewController: GameViewController?, gameBoard: Gameboard?, gameBoardView: GameboardView?, markView: MarkView) {
         self.player = player
         self.gameViewController = gameViewController
@@ -25,6 +32,8 @@ class PlayerGameState: PlayGameState {
         self.gameBoardView = gameBoardView
         self.markView = markView
     }
+
+    // MARK: - Public Methods
     
     func addSign(at position: GameboardPosition) {
         guard let gameBoardView = gameBoardView,

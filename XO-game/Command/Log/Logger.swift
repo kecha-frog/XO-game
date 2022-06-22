@@ -9,10 +9,16 @@
 import Foundation
 
 class Logger {
+    // MARK: - Static Properties
+
     public static var shared = Logger()
 
-    private init() {}
+    // MARK: - Initialization
     
+    private init() {}
+
+    // MARK: - Public Methods
+
     public func log(action: LogAction) {
         let command = LogCommand(action: action)
         LogInvoker.shared.addLogCommand(command: command)

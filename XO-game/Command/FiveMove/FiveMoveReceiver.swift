@@ -9,6 +9,8 @@
 import Foundation
 
 class FiveMoveReceiver {
+    // MARK: - Public Methods
+    
     func getTuple(_ command: FiveMoveCommand) -> (Player, GameboardPosition){
         return command.getCommand
     }

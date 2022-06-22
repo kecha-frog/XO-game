@@ -88,7 +88,7 @@
 		BAF3CE4C26CAD54F003F50B1 /* State */ = {
 			isa = PBXGroup;
 			children = (
-				BAF3CE4D26CAD56B003F50B1 /* PlayGameState.swift */,
+				F2C9AF8728630EEE00A81D7D /* Central Protocol */,
 				BAF3CE4F26CAD5BB003F50B1 /* GameEndState.swift */,
 				BAF3CE5126CAD72B003F50B1 /* PlayerGameState.swift */,
 				F2DE16C128607A3C004103C2 /* ComputerGameState.swift */,
@@ -151,6 +151,14 @@
 				F28BC5AB2861C1D2005872C4 /* FiveMoveInvoker.swift */,
 			);
 			path = FiveMove;
+			sourceTree = "<group>";
+		};
+		F2C9AF8728630EEE00A81D7D /* Central Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				BAF3CE4D26CAD56B003F50B1 /* PlayGameState.swift */,
+			);
+			path = "Central Protocol";
 			sourceTree = "<group>";
 		};
 		F874E4642224621100364CAE = {

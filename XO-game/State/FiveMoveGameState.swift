@@ -9,17 +9,11 @@
 import Foundation
 
 class FiveMoveGameState: PlayGameState {
-    var isMoveCompleted: Bool = false
-
+    // MARK: - Computed Properties
+    
     private var commands: [FiveMoveCommand] {
         return invoker.commands
     }
-
-    private(set) var player: Player
-    
-    private var moveCounter = 5
-    
-    let invoker = FiveMoveInvoker()
 
     private var getPlayerName: String {
         switch player {
@@ -39,10 +33,21 @@ class FiveMoveGameState: PlayGameState {
         }
     }
 
-    private(set) weak var gameViewController: GameViewController?
-    private(set) weak var gameBoard: Gameboard?
-    private(set) weak var gameBoardView: GameboardView?
+    // MARK: - Public Properties
 
+    var isMoveCompleted: Bool = false
+    let invoker = FiveMoveInvoker()
+
+    // MARK: - Private Properties
+
+    private(set) var player: Player
+    private var moveCounter = 5
+
+    private weak var gameViewController: GameViewController?
+    private weak var gameBoard: Gameboard?
+    private weak var gameBoardView: GameboardView?
+
+    // MARK: - Initialization
 
     init(player: Player, gameViewController: GameViewController?, gameBoardView: GameboardView?, gameBoard: Gameboard?) {
         self.player = player
@@ -50,6 +55,8 @@ class FiveMoveGameState: PlayGameState {
         self.gameBoardView = gameBoardView
         self.gameBoard = gameBoard
     }
+
+    // MARK: - Public Methods
 
     func addSign(at position: GameboardPosition) {
         guard let gameBoardView = gameBoardView,
@@ -102,6 +109,8 @@ class FiveMoveGameState: PlayGameState {
         gameViewController?.moveCounterLabel.isHidden = false
         gameViewController?.moveCounterLabel.text = "\(getPlayerName) сделайте 5 ходов"
     }
+
+    // MARK: - Private Methods
 
     private func beginSwitchPLayer(){
         player = player.next

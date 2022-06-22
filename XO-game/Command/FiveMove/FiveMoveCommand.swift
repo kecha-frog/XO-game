@@ -9,15 +9,23 @@
 import Foundation
 
 final class FiveMoveCommand {
+    // MARK: - Computed Properties
+
+    var getCommand: (Player, GameboardPosition) {
+        return (self.player, self.position)
+    }
+
+    // MARK: - Private Properties
+
     private let player: Player
     private let position: GameboardPosition
+
+
+    // MARK: - Initialization
 
     init(_ player: Player, _ position: GameboardPosition) {
         self.player = player
         self.position = position
     }
 
-    var getCommand: (Player, GameboardPosition) {
-        return (self.player, self.position)
-    }
 }

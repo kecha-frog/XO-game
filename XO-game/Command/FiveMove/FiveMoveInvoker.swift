@@ -9,31 +9,41 @@
 import Foundation
 
 class FiveMoveInvoker {
-    let receiver = FiveMoveReceiver()
-
-    /// Вызывается по завершению execute
-    var complete: (([(Player, GameboardPosition)])-> Void)?
-
-    private(set) var commands: [FiveMoveCommand]
+    // MARK: - Computed Properties
 
     private var bufferSize: Int {
         moveIndex.count
     }
-
     /// Очередность ходов
     private var moveIndex: [Int] {
         [0,5,1,6,2,7,3,8,4,9]
     }
-    
+
+    // MARK: - Public Properties
+
+    /// Вызывается по завершению execute
+    var complete: (([(Player, GameboardPosition)])-> Void)?
+
+    // MARK: - Private Properties
+
+    private let receiver = FiveMoveReceiver()
+    private(set) var commands: [FiveMoveCommand]
+
+    // MARK: - Initialization
+
     init() {
         self.commands = []
     }
+
+    // MARK: - Public Methods
 
     func addLogCommand(command: FiveMoveCommand) {
         commands.append(command)
         execute()
     }
 
+    // MARK: - Private Methods
+    
     private func execute() {
         guard commands.count >= bufferSize else {
             return

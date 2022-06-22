@@ -13,19 +13,10 @@ enum GameChoice {
     case fiveMoves(isMoveAllowed: Bool = true)
     case fiveMovesComputer(_ move: [(Player, GameboardPosition)], isMoveAllowed: Bool = true)
     case vsComputer(isMoveAllowed: Bool = true)
+}
 
-    mutating func moveAllow(_ move: Bool) {
-        switch self {
-        case .vsPlayer:
-            break
-        case .fiveMovesComputer(let array, _):
-            self  = .fiveMovesComputer(array, isMoveAllowed: move)
-        case .fiveMoves(_):
-            self  = .fiveMoves(isMoveAllowed: move)
-        case .vsComputer(_):
-            self  = .vsComputer(isMoveAllowed: move)
-        }
-    }
+extension GameChoice {
+    // MARK: - Computed Properties
 
     var isMoveAllowed: Bool {
         switch self {
@@ -37,6 +28,21 @@ enum GameChoice {
             return isMoveAllowed
         case .vsComputer(let isMoveAllowed):
             return isMoveAllowed
+        }
+    }
+    
+    // MARK: - Public Methods
+
+    mutating func moveAllow(_ move: Bool) {
+        switch self {
+        case .vsPlayer:
+            break
+        case .fiveMovesComputer(let array, _):
+            self  = .fiveMovesComputer(array, isMoveAllowed: move)
+        case .fiveMoves(_):
+            self  = .fiveMoves(isMoveAllowed: move)
+        case .vsComputer(_):
+            self  = .vsComputer(isMoveAllowed: move)
         }
     }
 }

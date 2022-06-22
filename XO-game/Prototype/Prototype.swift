@@ -13,6 +13,8 @@ protocol Copying: AnyObject {
 }
 
 extension Copying  {
+    // MARK: - Public Methods
+    
     func copy() -> Self {
         return type(of: self).init(self)
     }

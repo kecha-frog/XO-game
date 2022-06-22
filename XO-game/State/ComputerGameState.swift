@@ -9,6 +9,8 @@
 import Foundation
 
 class ComputerGameState: PlayerGameState {
+    // MARK: - Override Initialization
+
     override init(
         player: Player, gameViewController: GameViewController?,
         gameBoard: Gameboard?, gameBoardView: GameboardView?, markView: MarkView
@@ -19,6 +21,8 @@ class ComputerGameState: PlayerGameState {
             gameBoard: gameBoard,
             gameBoardView: gameBoardView, markView: markView)
     }
+
+    // MARK: - Override Methods
 
     override func begin() {
         super.begin()

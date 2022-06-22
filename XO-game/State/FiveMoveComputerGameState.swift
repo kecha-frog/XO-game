@@ -9,9 +9,13 @@
 import Foundation
 
 class FiveMoveComputerGameState: PlayerGameState{
+    // MARK: - Private Properties
+
     private(set) var move: [(Player, GameboardPosition)]
 
     private let position: GameboardPosition
+
+    // MARK: - Initialization
 
     init(gameViewController: GameViewController?,
          gameBoard: Gameboard?,
@@ -30,6 +34,8 @@ class FiveMoveComputerGameState: PlayerGameState{
             gameBoardView: gameBoardView, markView: markView)
         gameViewController?.moveAllow(false)
     }
+
+    // MARK: - Override Methods
 
     override func addSign(at position: GameboardPosition) {
         guard let gameBoardView = gameBoardView else { return }
@@ -60,6 +66,8 @@ class FiveMoveComputerGameState: PlayerGameState{
         gameViewController?.moveCounterLabel.isHidden = false
         gameViewController?.moveCounterLabel.text = "Воспроизведение игры"
     }
+
+    // MARK: - Private Methods
 
     private func computerMove() {
         guard let gameBoardView = self.gameBoardView else { return }
