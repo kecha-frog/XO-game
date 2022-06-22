@@ -9,9 +9,8 @@
 import Foundation
 
 enum GameChoice {
-    case vsPlayer
+    case vsPlayer(isMoveAllowed: Bool = true)
     case fiveMoves(isMoveAllowed: Bool = true)
-    case fiveMovesComputer(_ move: [(Player, GameboardPosition)], isMoveAllowed: Bool = true)
     case vsComputer(isMoveAllowed: Bool = true)
 }
 
@@ -22,9 +21,7 @@ extension GameChoice {
     /// Ограничение хода чтоб во время хождения компьютера нельзя было поставить view
     var isMoveAllowed: Bool {
         switch self {
-        case .vsPlayer:
-            return true
-        case .fiveMovesComputer(_, let isMoveAllowed):
+        case .vsPlayer(let isMoveAllowed):
             return isMoveAllowed
         case .fiveMoves(let isMoveAllowed):
             return isMoveAllowed
@@ -39,10 +36,8 @@ extension GameChoice {
     /// - Parameter move: 
     mutating func moveAllow(_ move: Bool) {
         switch self {
-        case .vsPlayer:
-            break
-        case .fiveMovesComputer(let array, _):
-            self  = .fiveMovesComputer(array, isMoveAllowed: move)
+        case .vsPlayer(_):
+            self  = .fiveMoves(isMoveAllowed: move)
         case .fiveMoves(_):
             self  = .fiveMoves(isMoveAllowed: move)
         case .vsComputer(_):

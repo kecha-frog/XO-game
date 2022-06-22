@@ -32,7 +32,7 @@ class GameViewController: UIViewController {
     }()
 
     private var counter = 0
-    private var gameChoice:GameChoice = .vsComputer()
+    var gameChoice:GameChoice = .vsComputer()
 
     private let gameBoard = Gameboard()
     private lazy var referee = Referee(gameboard: gameBoard)
@@ -102,23 +102,11 @@ class GameViewController: UIViewController {
                 gameViewController: self,
                 gameBoard: gameBoard,
                 gameBoardView: gameboardView, markView: markView)
-        case .fiveMoves, .fiveMovesComputer(_, _):
+        case .fiveMoves:
             currentState = FiveMoveGameState(
                 player: firstPlayer,
                 gameViewController: self,
                 gameBoardView: gameboardView, gameBoard: gameBoard)
-
-            // Замыкание command передает тюпл ходов
-            if let playerState = currentState as? FiveMoveGameState{
-                playerState.invoker.complete = { [weak self] move in
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
-                        // выбор state воспроизведения ходов
-                        self?.gameChoice = .fiveMovesComputer(move)
-                        self?.gameboardView.clear()
-                        self?.nextPlayerTurn()
-                    }
-                }
-            }
         }
 
     }
@@ -156,31 +144,6 @@ class GameViewController: UIViewController {
                                              gameViewController: self,
                                              gameBoardView: gameboardView,
                                              gameBoard: gameBoard)
-        case .fiveMovesComputer(let move, _):
-
-            var moveArray: [(Player, GameboardPosition)]?
-            var next: Player?
-
-            // получение начальных ходов или продолжения ходов
-            if let state = currentState as? FiveMoveGameState {
-                moveArray = move
-                next = state.player.next
-            }
-
-            if let state = currentState as? FiveMoveComputerGameState {
-                moveArray = state.move
-                next = state.player.next
-            }
-
-            guard let next = next, let moveArray = moveArray else { return }
-
-            let markView = getMarkView(player: next)
-
-            currentState = FiveMoveComputerGameState(gameViewController: self,
-                                                     gameBoard: gameBoard,
-                                                     gameBoardView: gameboardView,
-                                                     markView: markView,
-                                                     moveArray)
         case .vsComputer(_):
             guard let computerGame = currentState as? ComputerGameState else { return }
 
@@ -246,7 +209,7 @@ class GameViewController: UIViewController {
         self.secondPlayerTurnLabel.text = "2nd player"
 
         if sender.selectedSegmentIndex == 0  {
-            self.gameChoice = .vsPlayer
+            self.gameChoice = .vsPlayer()
         } else if sender.selectedSegmentIndex == 1 {
             self.gameChoice = .fiveMoves()
         } else if sender.selectedSegmentIndex == 2 {

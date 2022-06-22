@@ -21,7 +21,6 @@
 		F28BC5A62861A85B005872C4 /* FiveMoveCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28BC5A52861A85B005872C4 /* FiveMoveCommand.swift */; };
 		F28BC5AA2861C117005872C4 /* FiveMoveReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28BC5A92861C117005872C4 /* FiveMoveReceiver.swift */; };
 		F28BC5AC2861C1D2005872C4 /* FiveMoveInvoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28BC5AB2861C1D2005872C4 /* FiveMoveInvoker.swift */; };
-		F28BC5AE286207D6005872C4 /* FiveMoveComputerGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28BC5AD286207D5005872C4 /* FiveMoveComputerGameState.swift */; };
 		F2DE16C228607A3C004103C2 /* ComputerGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DE16C128607A3C004103C2 /* ComputerGameState.swift */; };
 		F874E4712224621100364CAE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F874E4702224621100364CAE /* AppDelegate.swift */; };
 		F874E4732224621100364CAE /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F874E4722224621100364CAE /* GameViewController.swift */; };
@@ -54,7 +53,6 @@
 		F28BC5A52861A85B005872C4 /* FiveMoveCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveMoveCommand.swift; sourceTree = "<group>"; };
 		F28BC5A92861C117005872C4 /* FiveMoveReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveMoveReceiver.swift; sourceTree = "<group>"; };
 		F28BC5AB2861C1D2005872C4 /* FiveMoveInvoker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveMoveInvoker.swift; sourceTree = "<group>"; };
-		F28BC5AD286207D5005872C4 /* FiveMoveComputerGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveMoveComputerGameState.swift; sourceTree = "<group>"; };
 		F2DE16C128607A3C004103C2 /* ComputerGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComputerGameState.swift; sourceTree = "<group>"; };
 		F874E46D2224621100364CAE /* XO-game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "XO-game.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F874E4702224621100364CAE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -93,7 +91,6 @@
 				BAF3CE5126CAD72B003F50B1 /* PlayerGameState.swift */,
 				F2DE16C128607A3C004103C2 /* ComputerGameState.swift */,
 				F28BC5A02861A2CD005872C4 /* FiveMoveGameState.swift */,
-				F28BC5AD286207D5005872C4 /* FiveMoveComputerGameState.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -313,7 +310,6 @@
 				BAF3CE5026CAD5BB003F50B1 /* GameEndState.swift in Sources */,
 				F28BC5AA2861C117005872C4 /* FiveMoveReceiver.swift in Sources */,
 				F874E4E22225CABF00364CAE /* OView.swift in Sources */,
-				F28BC5AE286207D6005872C4 /* FiveMoveComputerGameState.swift in Sources */,
 				BAF3CE4E26CAD56B003F50B1 /* PlayGameState.swift in Sources */,
 				BAF3CE5A26CAEF1A003F50B1 /* LogReceiver.swift in Sources */,
 				F28BC59D28619DB1005872C4 /* GameChoice.swift in Sources */,
