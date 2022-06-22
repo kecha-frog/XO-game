@@ -51,9 +51,11 @@ class GameViewController: UIViewController {
         gameboardView.onSelectPosition = { [weak self] position in
             guard let self = self else { return }
 
+            // Ограничение хода
             if self.gameChoice.isMoveAllowed{
                 self.currentState.addSign(at: position)
 
+                // когда идет запись ходов в 5x5 ходы не считаются
                 switch self.gameChoice {
                 case .fiveMoves:
                     break
@@ -86,6 +88,7 @@ class GameViewController: UIViewController {
         
         let markView = getMarkView(player: firstPlayer)
 
+        // выбор исходя из игры
         switch gameChoice{
         case .vsPlayer:
             currentState = PlayerGameState(
@@ -105,11 +108,13 @@ class GameViewController: UIViewController {
                 gameViewController: self,
                 gameBoardView: gameboardView, gameBoard: gameBoard)
 
+            // Замыкание command передает тюпл ходов
             if let playerState = currentState as? FiveMoveGameState{
                 playerState.invoker.complete = { [weak self] move in
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
-                        self?.gameboardView.clear()
+                        // выбор state воспроизведения ходов
                         self?.gameChoice = .fiveMovesComputer(move)
+                        self?.gameboardView.clear()
                         self?.nextPlayerTurn()
                     }
                 }
@@ -152,9 +157,11 @@ class GameViewController: UIViewController {
                                              gameBoardView: gameboardView,
                                              gameBoard: gameBoard)
         case .fiveMovesComputer(let move, _):
+
             var moveArray: [(Player, GameboardPosition)]?
             var next: Player?
 
+            // получение начальных ходов или продолжения ходов
             if let state = currentState as? FiveMoveGameState {
                 moveArray = move
                 next = state.player.next
@@ -194,6 +201,10 @@ class GameViewController: UIViewController {
                                              markView: markView)
         }
     }
+
+    func moveAllow(_ move: Bool) {
+        gameChoice.moveAllow(move)
+    }
     
     private func getMarkView(player: Player) -> MarkView {
         switch player {
@@ -228,9 +239,6 @@ class GameViewController: UIViewController {
         segmentedControl.selectedSegmentIndex = 2
     }
 
-    func moveAllow(_ move: Bool) {
-        gameChoice.moveAllow(move)
-    }
 
     // MARK: - Actions
 

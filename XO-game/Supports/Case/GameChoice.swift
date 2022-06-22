@@ -18,6 +18,8 @@ enum GameChoice {
 extension GameChoice {
     // MARK: - Computed Properties
 
+
+    /// Ограничение хода чтоб во время хождения компьютера нельзя было поставить view
     var isMoveAllowed: Bool {
         switch self {
         case .vsPlayer:
@@ -33,6 +35,8 @@ extension GameChoice {
     
     // MARK: - Public Methods
 
+    /// Функция резрешения хода
+    /// - Parameter move: 
     mutating func moveAllow(_ move: Bool) {
         switch self {
         case .vsPlayer:
