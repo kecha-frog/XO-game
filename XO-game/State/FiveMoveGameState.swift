@@ -36,7 +36,7 @@ class FiveMoveGameState: PlayGameState {
     // MARK: - Public Properties
 
     var isMoveCompleted: Bool = false
-    let invoker = FiveMoveInvoker()
+    let invoker: FiveMoveInvoker
 
     // MARK: - Private Properties
 
@@ -54,6 +54,8 @@ class FiveMoveGameState: PlayGameState {
         self.gameViewController = gameViewController
         self.gameBoardView = gameBoardView
         self.gameBoard = gameBoard
+
+        self.invoker = FiveMoveInvoker(gameViewController: gameViewController, gameBoardView: gameBoardView, gameBoard: gameBoard)
     }
 
     // MARK: - Public Methods
@@ -72,7 +74,7 @@ class FiveMoveGameState: PlayGameState {
             gameViewController?.moveCounterLabel.text = "выберите еще \(5 + moveCounter)"
         }
 
-        invoker.addLogCommand(command: .init(self.player, position))
+        invoker.addLogCommand(command: .init(self.player, position, markView))
 
         gameBoardView.placeMarkView(markView.copy(), at: position)
 

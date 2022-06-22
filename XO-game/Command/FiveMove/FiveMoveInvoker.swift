@@ -21,17 +21,18 @@ class FiveMoveInvoker {
 
     // MARK: - Public Properties
 
-    /// Вызывается по завершению execute
-    var complete: (([(Player, GameboardPosition)])-> Void)?
-
     // MARK: - Private Properties
 
-    private let receiver = FiveMoveReceiver()
+    private let receiver: FiveMoveReceiver
     private(set) var commands: [FiveMoveCommand]
 
+    private weak var gameViewController: GameViewController?
+    
     // MARK: - Initialization
 
-    init() {
+    init(gameViewController: GameViewController?, gameBoardView: GameboardView?, gameBoard: Gameboard?) {
+        self.gameViewController = gameViewController
+        self.receiver = FiveMoveReceiver(gameBoardView: gameBoardView, gameBoard: gameBoard)
         self.commands = []
     }
 
@@ -49,12 +50,26 @@ class FiveMoveInvoker {
             return
         }
 
-        let array: [(Player, GameboardPosition)] = moveIndex.map { index in
-            let command = commands[index]
-            return receiver.getTuple(command)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) { [weak self] in
+            self?.gameViewController?.gameChoice = .vsPlayer(isMoveAllowed: false)
+            self?.gameViewController?.restartButtonTapped(nil)
         }
 
-        
-        self.complete?(array)
+        let group = DispatchGroup()
+
+        var sec: Double = 2
+
+        self.moveIndex.forEach { index in
+            group.enter()
+            let command = self.commands[index]
+            receiver.move(command, group: group, sec: sec)
+            sec += 0.33
+        }
+
+        group.notify(queue: .main) { [weak self] in
+            self?.gameViewController?.nextPlayerTurn()
+            self?.gameViewController?.gameChoice = .fiveMoves(isMoveAllowed: true)
+        }
     }
+
 }

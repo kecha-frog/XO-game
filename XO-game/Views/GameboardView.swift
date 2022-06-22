@@ -46,8 +46,10 @@ public class GameboardView: UIView {
         return markViewForPosition[position] == nil
     }
     
-    public func placeMarkView(_ markView: MarkView, at position: GameboardPosition) {
-        guard self.canPlaceMarkView(at: position) else { return }
+    public func placeMarkView(_ markView: MarkView, at position: GameboardPosition, checkPlace: Bool = true) {
+        if checkPlace {
+            guard self.canPlaceMarkView(at: position) else { return }
+        }
 
         updateFrame(for: markView, at: position)
         markViewForPosition[position] = markView
