@@ -62,7 +62,7 @@ class FiveMoveInvoker {
         self.moveIndex.forEach { index in
             group.enter()
             let command = self.commands[index]
-            receiver.move(command.getCommand, group: group, sec: sec)
+            receiver.move(command, group: group, sec: sec)
             sec += 0.5
         }
 
