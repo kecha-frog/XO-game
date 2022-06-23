@@ -29,5 +29,4 @@ final class FiveMoveCommand {
         self.position = position
         self.mark = markView
     }
-
 }

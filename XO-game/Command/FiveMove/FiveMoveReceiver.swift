@@ -23,10 +23,10 @@ class FiveMoveReceiver {
 
     // MARK: - Public Methods
     
-    func move(_ command: FiveMoveCommand, group: DispatchGroup, sec: Double) {
+    func move(_ command: (Player, GameboardPosition, MarkView), group: DispatchGroup, sec: Double) {
         Timer.scheduledTimer(withTimeInterval: sec, repeats: false) { [weak self] (timer) in
             DispatchQueue.main.async {
-                let (player, position, mark) = command.getCommand
+                let (player, position, mark) = command
 
                 self?.gameBoardView?.removeMarkView(at: position)
                 self?.gameBoardView?.placeMarkView(mark, at: position, checkPlace: false)
