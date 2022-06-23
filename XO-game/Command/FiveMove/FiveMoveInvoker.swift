@@ -53,6 +53,7 @@ class FiveMoveInvoker {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + sec) { [weak self] in
             self?.gameViewController?.moveAllow(false)
             self?.gameViewController?.restartButtonTapped(nil)
+            self?.gameViewController?.moveCounterLabel.text = "Воспроизведение ходов"
         }
         sec += 0.5
 
@@ -66,9 +67,12 @@ class FiveMoveInvoker {
         }
 
         group.notify(queue: .main) {
-            self.gameViewController?.counter = 9
+            for _ in 0..<9{
+                self.gameViewController?.counterMove()
+            }
             self.gameViewController?.nextPlayerTurn()
             self.gameViewController?.moveAllow(true)
+            self.gameViewController?.moveCounterLabel.isHidden = true
         }
     }
 

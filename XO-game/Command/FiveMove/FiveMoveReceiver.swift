@@ -10,8 +10,7 @@ import Foundation
 
 class FiveMoveReceiver {
     // MARK: - Private Properties
-    
-    private weak var gameViewController: GameViewController?
+
     private weak var gameBoard: Gameboard?
     private weak var gameBoardView: GameboardView?
 

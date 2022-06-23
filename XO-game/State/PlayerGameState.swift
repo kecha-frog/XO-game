@@ -39,7 +39,8 @@ class PlayerGameState: PlayGameState {
         guard let gameBoardView = gameBoardView,
               gameBoardView.canPlaceMarkView(at: position)
         else { return }
-        
+
+        gameViewController?.counterMove()
         gameBoard?.setPlayer(player, at: position)
         Logger.shared.log(action: .playerSetSign(player: player, position: position))
         gameBoardView.placeMarkView(markView.copy(), at: position)

@@ -31,7 +31,7 @@ class GameViewController: UIViewController {
         return control
     }()
 
-    var counter = 0
+    private var counter = 0
     var gameChoice:GameChoice = .vsComputer()
 
     private let gameBoard = Gameboard()
@@ -54,14 +54,6 @@ class GameViewController: UIViewController {
             // Ограничение хода
             if self.gameChoice.isMoveAllowed{
                 self.currentState.addSign(at: position)
-
-                // когда идет запись ходов в 5x5 ходы не считаются
-                switch self.gameChoice {
-                case .fiveMoves:
-                    break
-                default:
-                    self.counter += 1
-                }
 
                 if self.currentState.isMoveCompleted {
                     self.nextPlayerTurn()
@@ -164,6 +156,10 @@ class GameViewController: UIViewController {
                                              gameBoardView: gameboardView,
                                              markView: markView)
         }
+    }
+
+    func counterMove(){
+        self.counter += 1
     }
 
     func moveAllow(_ move: Bool) {
