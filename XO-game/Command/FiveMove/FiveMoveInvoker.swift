@@ -19,8 +19,6 @@ class FiveMoveInvoker {
         [0,5,1,6,2,7,3,8,4,9]
     }
 
-    // MARK: - Public Properties
-
     // MARK: - Private Properties
 
     private let receiver: FiveMoveReceiver
@@ -50,25 +48,27 @@ class FiveMoveInvoker {
             return
         }
 
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) { [weak self] in
-            self?.gameViewController?.gameChoice = .vsPlayer(isMoveAllowed: false)
+        var sec: Double = 1
+
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + sec) { [weak self] in
+            self?.gameViewController?.moveAllow(false)
             self?.gameViewController?.restartButtonTapped(nil)
         }
+        sec += 0.5
 
         let group = DispatchGroup()
-
-        var sec: Double = 2
 
         self.moveIndex.forEach { index in
             group.enter()
             let command = self.commands[index]
             receiver.move(command, group: group, sec: sec)
-            sec += 0.33
+            sec += 0.5
         }
 
-        group.notify(queue: .main) { [weak self] in
-            self?.gameViewController?.nextPlayerTurn()
-            self?.gameViewController?.gameChoice = .fiveMoves(isMoveAllowed: true)
+        group.notify(queue: .main) {
+            self.gameViewController?.counter = 9
+            self.gameViewController?.nextPlayerTurn()
+            self.gameViewController?.moveAllow(true)
         }
     }
 

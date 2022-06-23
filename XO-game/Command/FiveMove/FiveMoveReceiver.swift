@@ -29,13 +29,11 @@ class FiveMoveReceiver {
             DispatchQueue.main.async {
                 let (player, position, mark) = command.getCommand
 
-
                 self?.gameBoardView?.removeMarkView(at: position)
                 self?.gameBoardView?.placeMarkView(mark, at: position, checkPlace: false)
                 self?.gameBoard?.setPlayer(player, at: position)
                 group.leave()
             }
-
         }
     }
 }

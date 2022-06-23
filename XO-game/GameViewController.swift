@@ -31,7 +31,7 @@ class GameViewController: UIViewController {
         return control
     }()
 
-    private var counter = 0
+    var counter = 0
     var gameChoice:GameChoice = .vsComputer()
 
     private let gameBoard = Gameboard()
@@ -117,7 +117,8 @@ class GameViewController: UIViewController {
             return
         }
 
-        if counter >= 10 {
+
+        if counter >= 9 {
             Logger.shared.log(action: .gameFinished(won: nil))
             currentState = GameEndState(winnerPlayer: nil, gameViewController: self)
             return
