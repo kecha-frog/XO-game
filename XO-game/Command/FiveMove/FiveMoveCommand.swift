@@ -9,11 +9,11 @@
 import Foundation
 
 final class FiveMoveCommand {
-    // MARK: - Private Properties
+    // MARK: - Public Properties
 
-    private let player: Player
-    private let position: GameboardPosition
-    private let mark: MarkView
+    let player: Player
+    let position: GameboardPosition
+    let mark: MarkView
 
 
     // MARK: - Initialization
@@ -26,7 +26,7 @@ final class FiveMoveCommand {
 
     // MARK: - Public Methods
 
-    func execute() -> (Player, GameboardPosition, MarkView) {
-        return (self.player, self.position, self.mark)
+    func execute(reciver: FiveMoveReceiver) {
+        reciver.move(self)
     }
 }

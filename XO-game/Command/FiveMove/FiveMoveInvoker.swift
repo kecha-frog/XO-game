@@ -48,25 +48,20 @@ class FiveMoveInvoker {
             return
         }
 
-        var sec: Double = 1
-
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + sec) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + receiver.sec) { [weak self] in
             self?.gameViewController?.moveAllow(false)
             self?.gameViewController?.restartButtonTapped(nil)
             self?.gameViewController?.moveCounterLabel.text = "Воспроизведение ходов"
         }
-        sec += 0.5
+        receiver.sec += 0.5
 
-        let group = DispatchGroup()
-
+        
         self.moveIndex.forEach { index in
-            group.enter()
             let command = self.commands[index]
-            receiver.move(command, group: group, sec: sec)
-            sec += 0.5
+            command.execute(reciver: receiver)
         }
 
-        group.notify(queue: .main) {
+        receiver.group.notify(queue: .main) {
             for _ in 0..<9{
                 self.gameViewController?.counterMove()
             }

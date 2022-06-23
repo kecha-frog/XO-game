@@ -9,6 +9,11 @@
 import Foundation
 
 class FiveMoveReceiver {
+    // MARK: - Public Properties
+
+    let group = DispatchGroup()
+    var sec: Double = 1
+
     // MARK: - Private Properties
 
     private weak var gameBoard: Gameboard?
@@ -23,15 +28,16 @@ class FiveMoveReceiver {
 
     // MARK: - Public Methods
     
-    func move(_ command: FiveMoveCommand, group: DispatchGroup, sec: Double) {
+    func move(_ command: FiveMoveCommand) {
+        group.enter()
+        self.sec += 0.5
         Timer.scheduledTimer(withTimeInterval: sec, repeats: false) { [weak self] (timer) in
             DispatchQueue.main.async {
-                let (player, position, mark) = command.execute()
-
-                self?.gameBoardView?.removeMarkView(at: position)
-                self?.gameBoardView?.placeMarkView(mark, at: position, checkPlace: false)
-                self?.gameBoard?.setPlayer(player, at: position)
-                group.leave()
+                guard let self = self else { return }
+                self.gameBoardView?.removeMarkView(at: command.position)
+                self.gameBoardView?.placeMarkView(command.mark, at: command.position, checkPlace: false)
+                self.gameBoard?.setPlayer(command.player, at: command.position)
+                self.group.leave()
             }
         }
     }
