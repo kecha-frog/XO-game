@@ -9,12 +9,8 @@
 import Foundation
 
 class LogCommand {
-    let action: LogAction
-    
-    init(action: LogAction) {
-        self.action = action
-    }
-    
+    // MARK: - Public Methods
+
     var logMessage: String {
         switch action {
         case .playerSetSign(let player, let position):
@@ -28,5 +24,15 @@ class LogCommand {
         case .restartGame:
             return "Game was restarted"
         }
+    }
+
+    // MARK: - Private Properties
+
+    private let action: LogAction
+
+    // MARK: - Initialization
+    
+    init(action: LogAction) {
+        self.action = action
     }
 }

@@ -9,15 +9,22 @@
 import Foundation
 
 class PlayerGameState: PlayGameState {
+    // MARK: - Public Properties
+
     var isMoveCompleted: Bool = false
     
     public let player: Player
-    
+
+    public let markView: MarkView
+
+    // MARK: - Private Properties
+
     private(set) weak var gameViewController: GameViewController?
     private(set) weak var gameBoard: Gameboard?
     private(set) weak var gameBoardView: GameboardView?
-    public let markView: MarkView
-    
+
+    // MARK: - Initialization
+
     init(player: Player, gameViewController: GameViewController?, gameBoard: Gameboard?, gameBoardView: GameboardView?, markView: MarkView) {
         self.player = player
         self.gameViewController = gameViewController
@@ -25,21 +32,15 @@ class PlayerGameState: PlayGameState {
         self.gameBoardView = gameBoardView
         self.markView = markView
     }
-    
+
+    // MARK: - Public Methods
     
     func addSign(at position: GameboardPosition) {
         guard let gameBoardView = gameBoardView,
               gameBoardView.canPlaceMarkView(at: position)
         else { return }
-        
-//        let markView: MarkView
-//        switch player {
-//        case .first:
-//            markView = XView()
-//        case .second:
-//            markView = OView()
-//        }
-        
+
+        gameViewController?.counterMove()
         gameBoard?.setPlayer(player, at: position)
         Logger.shared.log(action: .playerSetSign(player: player, position: position))
         gameBoardView.placeMarkView(markView.copy(), at: position)
@@ -57,7 +58,6 @@ class PlayerGameState: PlayGameState {
         }
         
         gameViewController?.winnerLabel.isHidden = true
+        gameViewController?.moveCounterLabel.isHidden = true
     }
-    
-    
 }
